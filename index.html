@@ -82,16 +82,72 @@ button { font-family: inherit; }
 html[lang="en"] [data-en] { display: revert !important; }
 html[lang="zh"] [data-zh] { display: revert !important; }
 
-/* Grid / glow */
+/* ─── Cosmic backdrop (hero + CTA) ───────────────────────────── */
+.cosmos {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 60% at 20% 10%, rgba(91, 62, 155, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 85% 15%, rgba(37, 99, 235, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 60% 85%, rgba(234, 88, 12, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #05050a 0%, #07070f 60%, #06060d 100%);
+}
+.starfield {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+/* Nebula clouds — soft, drifting slowly for life */
+.nebula {
+  position: absolute; pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  animation: nebulaDrift 48s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.nebula-violet {
+  width: 720px; height: 480px;
+  background: radial-gradient(circle, #7c4dff 0%, #3b2c6b 40%, transparent 70%);
+  top: -180px; left: -140px;
+  opacity: 0.55;
+}
+.nebula-cyan {
+  width: 540px; height: 420px;
+  background: radial-gradient(circle, #3b82f6 0%, #1e40af 45%, transparent 75%);
+  top: 120px; right: -120px;
+  opacity: 0.45;
+  animation-delay: -18s;
+}
+.nebula-amber {
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, #f97316 0%, #c2410c 40%, transparent 70%);
+  bottom: 60px; left: 30%;
+  opacity: 0.28;
+  animation-delay: -33s;
+  animation-duration: 60s;
+}
+@keyframes nebulaDrift {
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  50%  { transform: translate3d(40px,-30px,0) scale(1.08); }
+  100% { transform: translate3d(-30px,40px,0) scale(0.95); }
+}
+/* Subtle starfield grid (very dim, behind stars) */
 .grid-bg {
   position: absolute; inset: 0; pointer-events: none;
   background-image:
-    linear-gradient(rgba(125,137,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(125,137,255,0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black, transparent 75%);
+    linear-gradient(rgba(125,137,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,137,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 100% 50% at 50% 40%, black, transparent 80%);
+  opacity: 0.55;
 }
 .glow { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; opacity: 0.7; }
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .nebula { animation: none; }
+  .starfield { display: none; }
+}
 
 /* ─── NAV ──────────────────────────────── */
 nav {
@@ -140,7 +196,7 @@ nav {
 .btn-primary:hover { background: var(--accent3); }
 
 /* ─── HERO ────────────────────────────── */
-#hero { position: relative; min-height: 100vh; padding: 140px 40px 80px; overflow: hidden; }
+#hero { position: relative; min-height: 100vh; padding: 140px 40px 80px; overflow: hidden; background: #05050a; }
 .hero-inner {
   max-width: 1280px; margin: 0 auto; width: 100%;
   display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center;
@@ -694,7 +750,7 @@ html[lang="zh"] .test-quote { font-weight: 400; letter-spacing: -0.3px; line-hei
 
 /* ─── CTA ────────────────────────── */
 #cta {
-  background: var(--bg1); padding: 130px 40px;
+  background: #05050a; padding: 130px 40px;
   text-align: center; position: relative; overflow: hidden;
 }
 .cta-glow {
@@ -828,9 +884,13 @@ footer {
 
 <!-- HERO -->
 <section id="hero">
-  <div class="grid-bg"></div>
-  <div class="glow" style="width:600px;height:350px;background:#5a67e8;top:-100px;left:-5%;opacity:0.14"></div>
-  <div class="glow" style="width:400px;height:250px;background:#67e8f9;top:200px;right:-5%;opacity:0.08"></div>
+  <div class="cosmos">
+    <canvas class="starfield" data-stars="260" data-shooting="true" aria-hidden="true"></canvas>
+    <div class="nebula nebula-violet"></div>
+    <div class="nebula nebula-cyan"></div>
+    <div class="nebula nebula-amber"></div>
+    <div class="grid-bg"></div>
+  </div>
 
   <div class="hero-inner">
     <div>
@@ -1840,6 +1900,11 @@ footer {
 
 <!-- CTA -->
 <section id="cta">
+  <div class="cosmos">
+    <canvas class="starfield" data-stars="180" data-shooting="true" aria-hidden="true"></canvas>
+    <div class="nebula nebula-violet" style="top:auto;bottom:-150px;left:20%;width:500px;height:400px"></div>
+    <div class="nebula nebula-amber" style="top:50%;right:10%;left:auto;bottom:auto;width:280px;height:280px"></div>
+  </div>
   <div class="cta-glow"></div>
   <div class="cta-inner">
     <div class="hero-pill" style="justify-content:center;margin:0 auto 24px">
@@ -1973,6 +2038,181 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
 }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+/* ─── Cosmic starfield ────────────────────────────────────────────────
+   Per-canvas starfield with subtle twinkle, depth-tinted stars, and
+   occasional shooting stars. Pauses when tab is hidden or section is
+   offscreen. Respects prefers-reduced-motion automatically because the
+   <canvas> is CSS-hidden under that media query.
+*/
+(function cosmosInit() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvases = document.querySelectorAll('canvas.starfield');
+  if (!canvases.length) return;
+
+  canvases.forEach(initOneStarfield);
+
+  function initOneStarfield(canvas) {
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const STAR_COUNT = parseInt(canvas.dataset.stars, 10) || 220;
+    const SHOOTING_ENABLED = canvas.dataset.shooting === 'true';
+
+    let W = 0, H = 0, stars = [], shootingStars = [];
+    let lastShootingAt = 0;
+    let running = true;
+
+    function rebuild() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      W = Math.max(1, Math.floor(rect.width));
+      H = Math.max(1, Math.floor(rect.height));
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      stars = [];
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const depth = Math.random();                // 0=far, 1=near
+        const r = Math.random();
+        const tint = r < 0.12 ? 'blue' : (r < 0.2 ? 'warm' : 'white');
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: depth * 1.3 + 0.25,
+          depth,
+          opacity: 0.25 + Math.random() * 0.65,
+          twinkle: (Math.random() - 0.5) * 0.012,
+          tint,
+        });
+      }
+    }
+
+    function maybeSpawnShootingStar(now) {
+      if (!SHOOTING_ENABLED) return;
+      // Roughly one every 4–9 seconds, with a bias toward quiet periods.
+      if (now - lastShootingAt < 3500) return;
+      if (Math.random() < 0.012) {
+        lastShootingAt = now;
+        const angle = Math.PI * (0.18 + Math.random() * 0.14); // 32–58 degrees
+        const speed = 7 + Math.random() * 4;
+        shootingStars.push({
+          x: Math.random() * W * 0.7,
+          y: Math.random() * H * 0.35,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 0,
+          maxLife: 55 + Math.random() * 25,
+          length: 70 + Math.random() * 90,
+        });
+      }
+    }
+
+    function drawStar(s) {
+      let col;
+      if (s.tint === 'blue')      col = `rgba(170,200,255,${s.opacity})`;
+      else if (s.tint === 'warm') col = `rgba(255,215,170,${s.opacity})`;
+      else                        col = `rgba(255,255,255,${s.opacity})`;
+
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Softer glow on "near" stars for depth
+      if (s.depth > 0.72) {
+        ctx.fillStyle = col.replace(/[\d.]+\)$/, (s.opacity * 0.28) + ')');
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * 2.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawShooting(s) {
+      const life = s.life;
+      const fade = Math.min(1, life / 12, (s.maxLife - life) / 14);
+      const h = Math.hypot(s.vx, s.vy);
+      const tx = s.x - (s.vx / h) * s.length;
+      const ty = s.y - (s.vy / h) * s.length;
+
+      const grad = ctx.createLinearGradient(s.x, s.y, tx, ty);
+      grad.addColorStop(0,   `rgba(255,244,210,${fade})`);
+      grad.addColorStop(0.35,`rgba(255,180,110,${fade * 0.75})`);
+      grad.addColorStop(1,   `rgba(255, 90, 40, 0)`);
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.6;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(tx, ty);
+      ctx.stroke();
+
+      // Head glow
+      ctx.fillStyle = `rgba(255,240,200,${fade})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function frame(now) {
+      if (!running) return;
+
+      ctx.clearRect(0, 0, W, H);
+
+      for (const s of stars) {
+        s.opacity += s.twinkle;
+        if (s.opacity > 1)   { s.opacity = 1;   s.twinkle = -s.twinkle; }
+        if (s.opacity < 0.2) { s.opacity = 0.2; s.twinkle = -s.twinkle; }
+        drawStar(s);
+      }
+
+      maybeSpawnShootingStar(now);
+
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const s = shootingStars[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life += 1;
+        if (s.life > s.maxLife || s.x > W + s.length || s.y > H + s.length) {
+          shootingStars.splice(i, 1);
+          continue;
+        }
+        drawShooting(s);
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    rebuild();
+    requestAnimationFrame(frame);
+
+    /* Pause offscreen to save battery */
+    const visibilityObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const wasRunning = running;
+        running = entry.isIntersecting;
+        if (!wasRunning && running) requestAnimationFrame(frame);
+      });
+    }, { threshold: 0.01 });
+    visibilityObserver.observe(canvas);
+
+    document.addEventListener('visibilitychange', () => {
+      const wasRunning = running;
+      running = !document.hidden;
+      if (!wasRunning && running) requestAnimationFrame(frame);
+    });
+
+    /* Debounced resize */
+    let rto;
+    window.addEventListener('resize', () => {
+      clearTimeout(rto);
+      rto = setTimeout(rebuild, 150);
+    });
+  }
+})();
 </script>
 </body>
 </html>
