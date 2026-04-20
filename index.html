@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -31,7 +31,7 @@
 
 <!-- Theme + favicon (inline SVG hexagon) -->
 <meta name="theme-color" content="#06060a">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237d89ff'/%3E%3Cstop offset='1' stop-color='%234338ca'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' d='M16 1 L28.5 8 L28.5 24 L16 31 L3.5 24 L3.5 8 Z'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Inter' font-weight='900' font-size='16' fill='white'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='10%25' y1='0%25' x2='90%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230c2560'/%3E%3Cstop offset='45%25' stop-color='%233b82f6'/%3E%3Cstop offset='100%25' stop-color='%237dd3fc'/%3E%3C/linearGradient%3E%3CradialGradient id='s'%3E%3Cstop offset='0%25' stop-color='%23fef9c3'/%3E%3Cstop offset='30%25' stop-color='%23fbbf24'/%3E%3Cstop offset='70%25' stop-color='%23f97316'/%3E%3Cstop offset='100%25' stop-color='%23f97316' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='11' stroke='url(%23a)' stroke-width='2.8' stroke-linecap='round' stroke-dasharray='50 19' transform='rotate(-38 16 16)'/%3E%3Ccircle cx='25.5' cy='13.8' r='4' fill='url(%23s)'/%3E%3Ccircle cx='25.5' cy='13.8' r='1.4' fill='%23fff7ed'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -91,7 +91,7 @@ html[lang="zh"] [data-zh] { display: revert !important; }
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black, transparent 75%);
 }
-.glow { position: absolute; border-radius: 50%; filter: blur(110px); pointer-events: none; }
+.glow { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; opacity: 0.7; }
 
 /* ─── NAV ──────────────────────────────── */
 nav {
@@ -107,12 +107,11 @@ nav {
   font-size: 16px; font-weight: 700; letter-spacing: -0.3px;
 }
 .logo-mark {
-  width: 28px; height: 28px;
-  background: linear-gradient(135deg, #7d89ff 0%, #4338ca 100%);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-weight: 900; font-size: 11px;
+  width: 26px; height: 26px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
+.logo-mark svg { width: 100%; height: 100%; }
 .nav-center { display: flex; gap: 32px; font-size: 13.5px; color: var(--text2); font-weight: 500; }
 .nav-center a { transition: color 0.12s; }
 .nav-center a:hover { color: var(--text); }
@@ -209,11 +208,9 @@ html[lang="zh"] .hero-h1 { letter-spacing: -1.5px; }
 .app-brand { display: flex; align-items: center; gap: 8px; }
 .app-brand-mark {
   width: 22px; height: 22px;
-  background: linear-gradient(135deg, #7d89ff, #4338ca);
-  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 900; color: white;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
+.app-brand-mark svg { width: 100%; height: 100%; }
 .app-brand-name { font-size: 13px; font-weight: 700; letter-spacing: -0.2px; }
 .status-pill {
   display: flex; align-items: center; gap: 5px;
@@ -318,30 +315,45 @@ html[lang="zh"] .sec-h2 { letter-spacing: -1px; }
   align-items: center; margin-top: 60px;
 }
 .int-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
 }
 .int-tile {
-  aspect-ratio: 1.1;
-  background: var(--bg2);
+  aspect-ratio: 1.15;
+  background: linear-gradient(180deg, var(--bg2) 0%, var(--bg1) 100%);
   border: 1px solid var(--border2);
   border-radius: 12px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; padding: 12px;
-  transition: all 0.2s;
+  gap: 12px; padding: 16px 8px;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
   position: relative;
+  overflow: hidden;
 }
-.int-tile:hover { border-color: rgba(125,137,255,0.3); background: var(--bg3); transform: translateY(-1px); }
-.int-tile .int-mark {
-  width: 32px; height: 32px; border-radius: 7px;
+.int-tile::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(125,137,255,0.08), transparent 70%);
+  opacity: 0; transition: opacity 0.2s;
+  pointer-events: none;
+}
+.int-tile:hover { border-color: rgba(125,137,255,0.32); transform: translateY(-2px); }
+.int-tile:hover::before { opacity: 1; }
+.int-logo {
+  height: 32px; width: auto; max-width: 80%;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 14px;
-  font-family: 'JetBrains Mono', monospace;
+  filter: grayscale(0.1);
 }
-.int-tile .int-name { font-size: 11px; font-weight: 600; color: var(--text2); text-align: center; letter-spacing: -0.1px; }
+.int-logo img { height: 100%; width: auto; max-width: 100%; object-fit: contain; }
+.int-logo svg { height: 100%; width: auto; }
+.int-logo-wordmark {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800; font-size: 18px; letter-spacing: -0.5px;
+  line-height: 1; text-align: center;
+}
+.int-logo-wordmark small { font-weight: 500; font-size: 10px; display: block; margin-top: 3px; letter-spacing: 0.5px; opacity: 0.85; }
+.int-tile .int-name { font-size: 11.5px; font-weight: 600; color: var(--text2); text-align: center; letter-spacing: -0.1px; }
 .int-cat-label {
   grid-column: 1 / -1;
   font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
-  color: var(--text3); margin-top: 14px; margin-bottom: 2px;
+  color: var(--text3); margin-top: 18px; margin-bottom: 4px;
 }
 .int-cat-label:first-child { margin-top: 0; }
 
@@ -648,10 +660,39 @@ footer {
 </head>
 <body>
 
+<!-- ── Reusable Latent logo as SVG symbol ──────────────────────────── -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="latent-arc" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#0c2560"/>
+      <stop offset="45%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+    <radialGradient id="latent-spark" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef9c3"/>
+      <stop offset="30%" stop-color="#fbbf24"/>
+      <stop offset="70%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="latent-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0.8"/>
+    </filter>
+    <symbol id="latent-logo" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="11" stroke="url(#latent-arc)" stroke-width="2.6"
+              stroke-linecap="round" stroke-dasharray="50 19"
+              transform="rotate(-38 16 16)" fill="none"/>
+      <circle cx="25.5" cy="13.8" r="4" fill="url(#latent-spark)" filter="url(#latent-glow)"/>
+      <circle cx="25.5" cy="13.8" r="1.4" fill="#fff7ed"/>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">
-    <div class="logo-mark">⬡</div>
+    <div class="logo-mark">
+      <svg aria-hidden="true"><use href="#latent-logo"/></svg>
+    </div>
     Latent
   </a>
   <div class="nav-center">
@@ -727,7 +768,9 @@ footer {
     <div class="app-window fade-in vis">
       <div class="app-topbar">
         <div class="app-brand">
-          <div class="app-brand-mark">⬡</div>
+          <div class="app-brand-mark">
+            <svg aria-hidden="true"><use href="#latent-logo"/></svg>
+          </div>
           <span class="app-brand-name">Latent</span>
         </div>
         <div class="status-pill">
@@ -875,33 +918,129 @@ footer {
       </div>
 
       <div class="int-grid fade-in">
+        <!-- ── PLM SYSTEMS ─────────────────────────────────────────── -->
         <div class="int-cat-label" data-en="inline">PLM Systems</div>
         <div class="int-cat-label" data-zh="inline">PLM 系统</div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#0075A9,#005a7e);color:white">SA</div><div class="int-name">SAP PLM</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#00A1E0,#0278a8);color:white">SM</div><div class="int-name">Siemens Teamcenter</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#6B2C91,#4a1f66);color:white">PT</div><div class="int-name">PTC Windchill</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#D3482E,#a03925);color:white">DS</div><div class="int-name">Dassault ENOVIA</div></div>
 
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/sap/f0f0f5" alt="SAP" loading="lazy">
+          </div>
+          <div class="int-name">SAP PLM</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/siemens/009999" alt="Siemens" loading="lazy">
+          </div>
+          <div class="int-name">Siemens Teamcenter</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <span class="int-logo-wordmark" style="color:#c84a4a">PTC</span>
+          </div>
+          <div class="int-name">PTC Windchill</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <span class="int-logo-wordmark" style="color:#e04e2d">3<span style="color:#f0f0f5">D</span>S</span>
+          </div>
+          <div class="int-name">Dassault ENOVIA</div>
+        </div>
+
+        <!-- ── ERP & MES ──────────────────────────────────────────── -->
         <div class="int-cat-label" data-en="inline">ERP & MES</div>
         <div class="int-cat-label" data-zh="inline">ERP & MES</div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#0075A9,#005a7e);color:white">SA</div><div class="int-name">SAP ERP</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#C74634,#962f21);color:white">OR</div><div class="int-name">Oracle</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#E8B33A,#a87d22);color:white">YY</div><div class="int-name" data-en="inline">Yonyou</div><div class="int-name" data-zh="inline">用友</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#00A1E0,#0278a8);color:white">SM</div><div class="int-name">Siemens Opcenter</div></div>
 
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/sap/f0f0f5" alt="SAP" loading="lazy">
+          </div>
+          <div class="int-name">SAP ERP</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/oracle/f80000" alt="Oracle" loading="lazy">
+          </div>
+          <div class="int-name">Oracle</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <span class="int-logo-wordmark" style="color:#d9001b;font-family:'PingFang SC','Microsoft YaHei',sans-serif">用友</span>
+          </div>
+          <div class="int-name" data-en="inline">Yonyou</div>
+          <div class="int-name" data-zh="inline">用友 NC</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/siemens/009999" alt="Siemens" loading="lazy">
+          </div>
+          <div class="int-name">Siemens Opcenter</div>
+        </div>
+
+        <!-- ── DEV TOOLS ──────────────────────────────────────────── -->
         <div class="int-cat-label" data-en="inline">Developer Tools</div>
         <div class="int-cat-label" data-zh="inline">研发协作工具</div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#24292e,#1a1e23);color:white">GH</div><div class="int-name">GitHub</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#FC6D26,#a54814);color:white">GL</div><div class="int-name">GitLab</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#0052CC,#003d99);color:white">JR</div><div class="int-name">Jira</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#0052CC,#003d99);color:white">CF</div><div class="int-name">Confluence</div></div>
 
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/github/f0f0f5" alt="GitHub" loading="lazy">
+          </div>
+          <div class="int-name">GitHub</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/gitlab/fc6d26" alt="GitLab" loading="lazy">
+          </div>
+          <div class="int-name">GitLab</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/jira/2684ff" alt="Jira" loading="lazy">
+          </div>
+          <div class="int-name">Jira</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/confluence/2684ff" alt="Confluence" loading="lazy">
+          </div>
+          <div class="int-name">Confluence</div>
+        </div>
+
+        <!-- ── COMMUNICATION ─────────────────────────────────────── -->
         <div class="int-cat-label" data-en="inline">Communication</div>
         <div class="int-cat-label" data-zh="inline">沟通协作</div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#07B53B,#058a2d);color:white">WW</div><div class="int-name" data-en="inline">WeCom</div><div class="int-name" data-zh="inline">企业微信</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#00D6B9,#009b87);color:white">FS</div><div class="int-name" data-en="inline">Feishu / Lark</div><div class="int-name" data-zh="inline">飞书</div></div>
-        <div class="int-tile"><div class="int-mark" style="background:linear-gradient(135deg,#000,#333);color:white">DT</div><div class="int-name" data-en="inline">DingTalk</div><div class="int-name" data-zh="inline">钉钉</div></div>
-        <div class="int-tile" style="border-style:dashed;opacity:.7"><div class="int-mark" style="background:var(--bg3);color:var(--text3)">+</div><div class="int-name" data-en="inline">Custom</div><div class="int-name" data-zh="inline">自定义</div></div>
+
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/wechat/07c160" alt="WeChat" loading="lazy">
+          </div>
+          <div class="int-name" data-en="inline">WeCom</div>
+          <div class="int-name" data-zh="inline">企业微信</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <img src="https://cdn.simpleicons.org/lark/00d6b9" alt="Feishu" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;int-logo-wordmark&quot; style=&quot;color:#00d6b9&quot;>Feishu</span>'">
+          </div>
+          <div class="int-name" data-en="inline">Feishu / Lark</div>
+          <div class="int-name" data-zh="inline">飞书</div>
+        </div>
+        <div class="int-tile">
+          <div class="int-logo">
+            <svg viewBox="0 0 64 64" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="64" height="64" rx="14" fill="#1677ff"/>
+              <path d="M18 24c0-3 2-5 5-5h18c3 0 5 2 5 5v6c0 8-6 14-14 14h-2c-1 4-4 6-8 6 2-3 3-5 3-7-4-2-7-6-7-11v-8z" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="int-name" data-en="inline">DingTalk</div>
+          <div class="int-name" data-zh="inline">钉钉</div>
+        </div>
+        <div class="int-tile" style="border-style:dashed;background:transparent;opacity:.65">
+          <div class="int-logo">
+            <span class="int-logo-wordmark" style="color:var(--text3);font-size:24px">+</span>
+          </div>
+          <div class="int-name" data-en="inline">Custom connector</div>
+          <div class="int-name" data-zh="inline">自定义连接器</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1466,7 +1605,9 @@ footer {
   <div class="foot-inner">
     <div class="foot-brand">
       <div class="logo">
-        <div class="logo-mark">⬡</div>
+        <div class="logo-mark">
+      <svg aria-hidden="true"><use href="#latent-logo"/></svg>
+    </div>
         Latent
       </div>
       <p data-en="inline">The intelligence layer for manufacturing R&D. Connect every system. Answer every question. Ship faster.</p>
@@ -1539,8 +1680,8 @@ langButtons.forEach(btn => {
 try {
   const saved = localStorage.getItem('latent-lang');
   if (saved === 'en' || saved === 'zh') setLang(saved);
-  else setLang('zh');
-} catch(e) { setLang('zh'); }
+  else setLang('en');
+} catch(e) { setLang('en'); }
 
 /* ─── Demo-booking wire-up ────────────────────────────────────────────── */
 document.querySelectorAll('button').forEach(btn => {
