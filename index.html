@@ -162,8 +162,8 @@ nav {
 /* ─── HERO ────────────────────────────── */
 #hero { position: relative; min-height: 100vh; padding: 140px 40px 80px; overflow: hidden; background: #05050a; }
 .hero-inner {
-  max-width: 1280px; margin: 0 auto; width: 100%;
-  display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center;
+  max-width: 1320px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center;
   position: relative; z-index: 1;
 }
 .hero-pill {
@@ -274,6 +274,40 @@ html[lang="zh"] .hero-h1 { letter-spacing: -1.5px; }
   padding: 9px 12px; font-size: 12px; color: var(--text3);
   display: flex; align-items: center; justify-content: space-between;
 }
+/* Hero preset-question chips — revealed after auto-play finishes */
+.hero-chips {
+  margin: 0 14px 10px;
+  display: flex; flex-wrap: wrap; gap: 6px;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+.hero-chips.vis { opacity: 1; transform: none; pointer-events: auto; }
+.hero-chip {
+  font-family: inherit;
+  font-size: 11px; font-weight: 500;
+  color: var(--text2);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.hero-chip:hover {
+  color: var(--accent);
+  border-color: rgba(125,137,255,0.35);
+  background: rgba(125,137,255,0.08);
+}
+.hero-chip::before { content: '↳ '; color: var(--text3); }
+.bubble-ai .book-demo {
+  display: inline-block; margin-top: 8px;
+  font-size: 11px; color: var(--accent);
+  font-weight: 500; cursor: pointer;
+  border-bottom: 1px dotted rgba(125,137,255,0.35);
+}
+.bubble-ai .book-demo:hover { color: var(--text); border-color: var(--accent); }
 .send-btn {
   width: 24px; height: 24px;
   background: linear-gradient(135deg, #5a67e8, #7d89ff);
@@ -376,8 +410,10 @@ html[lang="zh"] .hero-h1 { letter-spacing: -1.5px; }
 }
 .case-stat { display: flex; flex-direction: column; gap: 6px; }
 .case-num {
-  font-size: 28px; font-weight: 700; color: var(--text); letter-spacing: -0.5px;
-  font-feature-settings: 'tnum';
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 26px; font-weight: 600; color: var(--text); letter-spacing: -0.5px;
+  font-feature-settings: 'tnum' 1, 'zero' 1;
+  font-variant-numeric: tabular-nums;
   display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap;
 }
 .case-num-arrow { color: var(--text3); font-weight: 500; margin: 0 2px; }
@@ -389,6 +425,198 @@ html[lang="zh"] .hero-h1 { letter-spacing: -1.5px; }
   .case-card { grid-template-columns: 1fr; gap: 28px; padding: 28px; }
   .case-stats { grid-template-columns: 1fr; gap: 20px; border-top: 1px solid var(--border); padding-top: 24px; }
   .case-num { font-size: 24px; }
+}
+
+/* ─── COMPARISON MATRIX ──────────────────────── */
+.cmp-wrap {
+  margin-top: 56px;
+  overflow-x: auto;
+  border-radius: 14px;
+}
+.cmp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  min-width: 860px;
+}
+.cmp-table th, .cmp-table td {
+  padding: 18px 22px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+.cmp-table thead th {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding-top: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border2);
+}
+.cmp-row-label {
+  color: var(--text);
+  font-weight: 500;
+  width: 28%;
+  white-space: nowrap;
+}
+.cmp-cell {
+  color: var(--text2);
+  line-height: 1.5;
+}
+.cmp-col-latent {
+  background: linear-gradient(180deg, rgba(125,137,255,0.07), rgba(125,137,255,0.02));
+  color: var(--text);
+  font-weight: 500;
+  position: relative;
+}
+.cmp-table thead .cmp-col-latent {
+  color: var(--accent);
+  background: linear-gradient(180deg, rgba(125,137,255,0.14), rgba(125,137,255,0.05));
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-top: 1px solid rgba(125,137,255,0.3);
+  border-left: 1px solid rgba(125,137,255,0.2);
+  border-right: 1px solid rgba(125,137,255,0.2);
+  border-bottom-color: rgba(125,137,255,0.25);
+  position: relative;
+}
+.cmp-table tbody td.cmp-col-latent {
+  border-left: 1px solid rgba(125,137,255,0.2);
+  border-right: 1px solid rgba(125,137,255,0.2);
+}
+.cmp-table tbody tr:last-child td.cmp-col-latent {
+  border-bottom: 1px solid rgba(125,137,255,0.2);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.cmp-icon {
+  display: inline-block;
+  width: 14px;
+  margin-right: 8px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 600;
+  text-align: center;
+}
+.cmp-yes { color: var(--green); }
+.cmp-no { color: var(--text3); opacity: 0.7; }
+.cmp-partial { color: var(--orange); }
+.cmp-col-latent .cmp-yes { color: var(--green); }
+.cmp-footnote {
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  line-height: 1.5;
+}
+@media (max-width: 860px) {
+  .cmp-wrap { margin-left: -40px; margin-right: -40px; padding: 0 40px; }
+  .cmp-table thead th { font-size: 10px; padding: 12px 14px; }
+  .cmp-table th, .cmp-table td { padding: 14px 16px; }
+}
+
+/* ─── ROI CALCULATOR ──────────────────────── */
+.roi-card {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.roi-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 120% at 100% 50%, rgba(125,137,255,0.08), transparent 55%);
+  pointer-events: none;
+}
+.roi-inputs {
+  padding: 44px 44px;
+  display: flex; flex-direction: column; gap: 28px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.roi-outputs {
+  padding: 44px 44px;
+  display: flex; flex-direction: column; gap: 24px;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(125,137,255,0.05), rgba(125,137,255,0.02));
+  position: relative;
+}
+.roi-input { display: flex; flex-direction: column; gap: 8px; }
+.roi-input-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 13px; color: var(--text2);
+}
+.roi-input-head .roi-label { font-weight: 500; color: var(--text); }
+.roi-input-head .roi-val {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 14px; font-weight: 600; color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.roi-slider {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  outline: none; cursor: pointer;
+}
+.roi-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px rgba(125,137,255,0.4), 0 2px 8px rgba(125,137,255,0.3);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.roi-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.roi-slider::-moz-range-thumb {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+}
+.roi-out {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+}
+.roi-out-main {
+  background: linear-gradient(180deg, rgba(125,137,255,0.08), rgba(125,137,255,0.03));
+  border-color: rgba(125,137,255,0.25);
+  padding: 20px 22px;
+}
+.roi-num {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 22px; font-weight: 600; color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+.roi-num-big {
+  font-size: 38px;
+  color: var(--accent);
+  letter-spacing: -1px;
+}
+.roi-lbl { font-size: 12px; color: var(--text2); }
+.roi-footnote {
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  line-height: 1.5;
+}
+@media (max-width: 860px) {
+  .roi-card { grid-template-columns: 1fr; }
+  .roi-inputs { border-right: none; border-bottom: 1px solid var(--border); padding: 32px 28px; }
+  .roi-outputs { padding: 32px 28px; }
+  .roi-num-big { font-size: 32px; }
 }
 
 /* ─── SECTIONS ──────────────────────── */
@@ -404,40 +632,188 @@ section { position: relative; padding: 110px 40px; }
 html[lang="zh"] .sec-h2 { letter-spacing: -1px; }
 .sec-p { font-size: 16.5px; color: var(--text2); line-height: 1.65; max-width: 640px; }
 
-/* ─── THREE PILLARS ──────────────────── */
-#pillars { background: var(--bg1); }
-.pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
-.pillar {
-  background: linear-gradient(180deg, var(--bg2), var(--bg1));
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 32px;
-  position: relative; overflow: hidden;
-  transition: all 0.2s;
+/* ─── THREE PILLARS (lite — quiet transition band) ──────────────────── */
+#pillars {
+  background: var(--bg1);
+  padding: 64px 40px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-.pillar:hover { border-color: rgba(125,137,255,0.3); transform: translateY(-2px); }
-.pillar::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at top right, rgba(125,137,255,0.08), transparent 60%);
-  pointer-events: none;
+.pillars-lead {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--text3); text-align: center; margin-bottom: 36px;
 }
-.pillar-icon {
-  width: 44px; height: 44px;
-  background: rgba(125,137,255,0.1);
-  border: 1px solid rgba(125,137,255,0.2);
-  border-radius: 10px; display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px;
+.pillars-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;
+  max-width: 1100px; margin: 0 auto;
 }
-.pillar h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 10px; }
-.pillar p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+.pillar-lite { position: relative; padding-left: 18px; }
+.pillar-lite::before {
+  content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px;
+  background: linear-gradient(180deg, rgba(125,137,255,0.55), rgba(125,137,255,0.05));
+  border-radius: 2px;
+}
+.pillar-lite h4 {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14.5px; font-weight: 700; color: var(--text);
+  letter-spacing: -0.2px; margin-bottom: 8px;
+}
+.pillar-lite h4 svg { color: var(--accent); flex-shrink: 0; }
+.pillar-lite p { font-size: 13px; color: var(--text2); line-height: 1.65; }
+@media (max-width: 860px) {
+  .pillars-row { grid-template-columns: 1fr; gap: 24px; }
+}
 
-/* ─── INTEGRATIONS ─────────────────── */
-#integrations { background: var(--bg); }
+/* ─── INTEGRATIONS (lite) ─────────────────── */
+#integrations { background: var(--bg); padding: 96px 40px; }
 .int-layout {
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-  align-items: center; margin-top: 60px;
+  align-items: center; margin-top: 48px;
 }
 .int-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+
+/* ─── INTEGRATIONS DIAGRAM (triangle flow + satellites) ──────── */
+.int-diagram {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1 / 0.88;
+  margin: 0 auto;
+}
+.int-diagram-lines {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.int-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+.int-node-main .int-node-bubble {
+  width: 92px; height: 92px; border-radius: 50%;
+  background: linear-gradient(180deg, var(--bg2), var(--bg1));
+  border: 1px solid var(--border3);
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(125,137,255,0.12);
+  position: relative;
+}
+.int-node-main .int-node-bubble::before {
+  content: ''; position: absolute; inset: -2px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, rgba(125,137,255,0.2), transparent 65%);
+  pointer-events: none;
+  z-index: -1;
+}
+.int-node-main .int-node-bubble img,
+.int-node-main .int-node-bubble .wm {
+  height: 20px; width: auto; flex-shrink: 0;
+  filter: grayscale(0.1);
+}
+.int-node-main .int-node-bubble .wm {
+  font-family: 'Inter', sans-serif; font-weight: 800;
+  font-size: 14px; letter-spacing: -0.4px;
+  display: inline-flex; align-items: center; line-height: 1;
+}
+.int-node-label {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  letter-spacing: -0.2px;
+}
+.int-node-sublabel {
+  font-size: 10.5px; color: var(--text3);
+  font-weight: 500; letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+/* Central Latent hexagon */
+.int-node-center {
+  left: 50%; top: 50%;
+}
+.int-node-center .int-hex {
+  width: 78px; height: 78px;
+  background: linear-gradient(135deg, #4338ca 0%, #7d89ff 50%, #67e8f9 100%);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  box-shadow: 0 8px 28px rgba(90,103,232,0.4);
+  position: relative;
+}
+.int-node-center .int-hex::before {
+  content: ''; position: absolute; inset: 3px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(180deg, rgba(6,6,10,0.15), rgba(6,6,10,0.45));
+}
+.int-node-center .int-hex-label {
+  position: relative; z-index: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 800;
+  letter-spacing: -0.3px; color: #fff;
+}
+.int-node-center .int-node-label { font-size: 13px; font-weight: 800; color: var(--accent); margin-top: 2px; }
+/* Triangle positions */
+.int-node-plm { left: 50%; top: 15%; }
+.int-node-erp { left: 82%; top: 70%; }
+.int-node-mes { left: 18%; top: 70%; }
+/* Satellite nodes */
+.int-sat { position: absolute; transform: translate(-50%, -50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.int-sat-bubble {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px;
+}
+.int-sat-bubble img { height: 100%; width: auto; object-fit: contain; }
+.int-sat-bubble .wm {
+  font-family: 'Inter', sans-serif; font-weight: 800;
+  font-size: 11px; letter-spacing: -0.3px; line-height: 1;
+}
+.int-sat-label { font-size: 10.5px; font-weight: 600; color: var(--text2); white-space: nowrap; }
+.int-sat-github { left: 10%; top: 18%; }
+.int-sat-jira { left: 90%; top: 18%; }
+.int-sat-feishu { left: 50%; top: 93%; }
+.int-sat-custom { left: 92%; top: 92%; }
+
+/* Flow arrows & dashed satellite lines */
+.int-flow-arrow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+.int-flow-arrow-head {
+  fill: var(--accent);
+  opacity: 0.8;
+}
+.int-sat-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.3;
+}
+.int-flow-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 8px; font-weight: 600;
+  fill: var(--text3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .int-node-main .int-node-bubble { width: 74px; height: 74px; }
+  .int-node-center .int-hex { width: 62px; height: 62px; }
+  .int-node-center .int-hex-label { font-size: 12px; }
+  .int-node-label { font-size: 12px; }
+  .int-node-sublabel { font-size: 9.5px; }
+  .int-sat-bubble { width: 34px; height: 34px; padding: 6px; }
+  .int-sat-label { font-size: 9.5px; }
 }
 .int-tile {
   aspect-ratio: 1.15;
@@ -479,8 +855,8 @@ html[lang="zh"] .sec-h2 { letter-spacing: -1px; }
 }
 .int-cat-label:first-child { margin-top: 0; }
 
-.int-text h3 { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px; }
-.int-text p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+.int-text h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.25; margin-bottom: 14px; }
+.int-text p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 18px; }
 .int-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
 .int-list li {
   list-style: none; display: flex; align-items: flex-start; gap: 10px;
@@ -628,17 +1004,70 @@ html[lang="zh"] .test-quote { font-weight: 400; letter-spacing: -0.3px; line-hei
 }
 .cert {
   background: var(--bg2); border: 1px solid var(--border2);
-  border-radius: 10px; padding: 14px 16px;
-  display: flex; align-items: center; gap: 12px;
+  border-radius: 10px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 14px;
+  transition: border-color 0.15s;
 }
-.cert-icon {
-  width: 32px; height: 32px; border-radius: 7px;
-  background: var(--bg3); border: 1px solid var(--border);
+.cert:hover { border-color: var(--border3); }
+.cert-mark {
+  width: 46px; height: 46px; border-radius: 8px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  position: relative; overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.06);
 }
-.cert-text { font-size: 12px; font-weight: 600; color: var(--text2); }
-.cert-text small { display: block; font-size: 10.5px; color: var(--text3); font-weight: 400; margin-top: 1px; }
+/* ISO 27001 — red tile, stacked wordmark */
+.cert-mark-iso {
+  background: #c8102e;
+  color: #fff;
+  flex-direction: column; gap: 1px;
+  line-height: 1;
+}
+.cert-mark-iso strong { font-size: 14px; font-weight: 800; letter-spacing: 0.6px; }
+.cert-mark-iso em {
+  font-size: 9px; font-weight: 700; letter-spacing: 1.2px; font-style: normal;
+  margin-top: 3px;
+}
+/* SOC 2 — steel-blue shield silhouette */
+.cert-mark-soc {
+  background: linear-gradient(180deg, #4a6591 0%, #263b5e 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
+  border-radius: 0;
+  color: #eef3fb;
+  font-size: 13px; font-weight: 800; letter-spacing: -0.3px;
+  align-items: flex-start;
+  padding-top: 10px;
+  box-shadow: none;
+}
+/* 等保三级 — red stamp/chop */
+.cert-mark-mlps {
+  background: #b8222d;
+  color: #fff3d8;
+  flex-direction: column; gap: 0;
+  line-height: 1;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans', sans-serif;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25), inset 0 0 0 2px #5e1017, inset 0 0 0 3px #b8222d;
+}
+.cert-mark-mlps strong { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; }
+.cert-mark-mlps em {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; font-style: normal;
+  margin-top: 3px;
+}
+/* GDPR — EU-flag derived star ring (public geometry) */
+.cert-mark-gdpr {
+  background: #003399;
+  padding: 0;
+}
+.cert-mark-gdpr svg { width: 100%; height: 100%; display: block; }
+.cert-mark-gdpr-label {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.6px;
+  color: #ffcc00;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.cert-text { font-size: 12.5px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.cert-text small { display: block; font-size: 11px; color: var(--text3); font-weight: 400; margin-top: 3px; letter-spacing: 0.1px; }
 
 .deploy-card {
   background: linear-gradient(180deg, var(--bg2), var(--bg1));
@@ -706,6 +1135,75 @@ html[lang="zh"] .test-quote { font-weight: 400; letter-spacing: -0.3px; line-hei
 }
 .tl-content h5 { font-size: 13.5px; font-weight: 700; margin-bottom: 3px; }
 .tl-content p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* ─── Founder signature ──────────────────────── */
+.founder-note {
+  margin-top: 64px;
+  padding: 32px 36px;
+  display: flex; align-items: center; gap: 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.founder-note::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 45% 110% at 0% 50%, rgba(125,137,255,0.08), transparent 55%);
+  pointer-events: none;
+}
+.founder-avatar {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: linear-gradient(135deg, #4338ca 10%, #7d89ff 90%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 26px; font-weight: 700; color: white;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 2px rgba(125,137,255,0.4), inset 0 0 0 2px rgba(255,255,255,0.06);
+  position: relative; z-index: 1;
+}
+.founder-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.founder-body { flex: 1; position: relative; z-index: 1; min-width: 0; }
+.founder-sig {
+  font-size: 14.5px; color: var(--text); line-height: 1.65;
+  margin-bottom: 10px;
+}
+.founder-sig strong { color: var(--text); font-weight: 700; }
+.founder-meta {
+  font-size: 12px; color: var(--text3);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.2px;
+}
+.founder-meta strong { color: var(--text2); font-weight: 600; }
+.founder-email {
+  color: var(--accent);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12.5px; font-weight: 500;
+  padding: 9px 14px; border-radius: 999px;
+  border: 1px solid rgba(125,137,255,0.28);
+  background: rgba(125,137,255,0.06);
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+.founder-email:hover {
+  color: var(--text);
+  background: rgba(125,137,255,0.14);
+  border-color: rgba(125,137,255,0.45);
+  transform: translateY(-1px);
+}
+@media (max-width: 860px) {
+  .founder-note { flex-wrap: wrap; padding: 24px; gap: 18px; }
+  .founder-email { width: 100%; text-align: center; }
+}
 
 /* ─── FAQ ────────────────────────── */
 #faq { background: var(--bg1); }
@@ -891,10 +1389,10 @@ footer {
       <button class="lang-btn" data-lang="en">EN</button>
       <button class="lang-btn active" data-lang="zh">中</button>
     </div>
-    <button class="btn-ghost" data-en="inline">Sign in</button>
-    <button class="btn-ghost" data-zh="inline">登录</button>
-    <button class="btn-primary" data-en="inline">Book a demo</button>
-    <button class="btn-primary" data-zh="inline">预约 Demo</button>
+    <button class="btn-ghost" data-mailto="hello" data-en="inline">Sign in</button>
+    <button class="btn-ghost" data-mailto="hello" data-zh="inline">登录</button>
+    <button class="btn-primary" data-mailto="demo" data-en="inline">Book a demo</button>
+    <button class="btn-primary" data-mailto="demo" data-zh="inline">预约 Demo</button>
   </div>
 </nav>
 
@@ -923,14 +1421,14 @@ footer {
       </h1>
 
       <p class="hero-sub" data-en="block">
-        Latent unifies every tool your company runs on — <strong>PLM, ERP, MES, CRM, GitHub, Jira</strong> — into one decision layer. Ask anything. Decide faster. <strong>Private by design, your data never leaves your network.</strong>
+        One conversational brain across every system — <strong>PLM, ERP, MES, Jira, GitHub</strong>. Ask in plain language. <strong>Private by design.</strong>
       </p>
       <p class="hero-sub" data-zh="block">
-        Latent 把公司运转的所有系统——<strong>PLM、ERP、MES、CRM、GitHub、Jira</strong>——统一为一个决策层。问任何问题，更快做决定。<strong>私有部署，数据不出内网。</strong>
+        一颗对话式大脑，覆盖所有系统——<strong>PLM、ERP、MES、Jira、GitHub</strong>。用中文提问。<strong>私有部署。</strong>
       </p>
 
       <div class="hero-btns">
-        <button class="btn-hero">
+        <button class="btn-hero" data-mailto="demo">
           <span data-en="inline">Book a demo →</span>
           <span data-zh="inline">预约 Demo →</span>
         </button>
@@ -1021,6 +1519,21 @@ footer {
         </div>
       </div>
 
+      <div class="hero-chips" id="hero-chips">
+        <button type="button" class="hero-chip" data-preset="capacity">
+          <span data-en="inline">Who's overloaded?</span>
+          <span data-zh="inline">谁负荷超标？</span>
+        </button>
+        <button type="button" class="hero-chip" data-preset="supplier">
+          <span data-en="inline">Any supplier risks?</span>
+          <span data-zh="inline">供应商有风险吗？</span>
+        </button>
+        <button type="button" class="hero-chip" data-preset="quality">
+          <span data-en="inline">What's driving quality failures?</span>
+          <span data-zh="inline">质量问题根因？</span>
+        </button>
+      </div>
+
       <div class="app-input">
         <span data-en="inline">Ask anything about your company</span>
         <span data-zh="inline">问任何关于你公司的问题</span>
@@ -1072,44 +1585,37 @@ footer {
   </div>
 </section>
 
-<!-- THREE PILLARS -->
+<!-- THREE PILLARS (quiet transition band) -->
 <section id="pillars">
-  <div class="sec-inner">
-    <div class="sec-label" data-en="inline">Why Latent</div>
-    <div class="sec-label" data-zh="inline">产品价值</div>
-    <h2 class="sec-h2" data-en="block">Three reasons companies<br>run their decisions on Latent.</h2>
-    <h2 class="sec-h2" data-zh="block">选择 Latent 运行<br>决策的三个理由</h2>
-    <p class="sec-p" data-en="block">Latent isn't another dashboard. It's a conversational brain that sits on top of every system you already have — and finally makes them talk to each other.</p>
-    <p class="sec-p" data-zh="block">Latent 不是又一个看板。它是架在你现有所有系统之上的对话式大脑——让散落在孤岛里的信息终于连起来，让决策者不再淹没在数字里。</p>
-
-    <div class="pillar-grid">
-      <div class="pillar fade-in">
-        <div class="pillar-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#7d89ff"><path d="M21 12a9 9 0 01-9 9 9 9 0 01-9-9 9 9 0 019-9c2.5 0 4.8.9 6.5 2.5"/><polyline points="22 4 12 14 9 11"/></svg>
-        </div>
-        <h3 data-en="inline">Unified across silos</h3>
-        <h3 data-zh="inline">打通所有系统孤岛</h3>
-        <p data-en="inline">PLM, ERP, MES, GitHub, Jira, Confluence — Latent reads them all in real time. One question, complete context. No more 5-system safari.</p>
-        <p data-zh="inline">PLM、ERP、MES、GitHub、Jira、Confluence——Latent 全部实时接入。一个问题，完整答案，不用再切换 5 个系统查数据。</p>
-      </div>
-      <div class="pillar fade-in">
-        <div class="pillar-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#7d89ff"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        </div>
-        <h3 data-en="inline">Private by design</h3>
-        <h3 data-zh="inline">私有部署，数据零外泄</h3>
-        <p data-en="inline">Full on-prem deployment. Your PLM data never touches the public internet. AI runs inside your network. Audit-ready logs included.</p>
-        <p data-zh="inline">完全私有化部署，数据不出企业内网。AI 模型可在客户环境内运行，带完整审计日志，符合信息安全合规要求。</p>
-      </div>
-      <div class="pillar fade-in">
-        <div class="pillar-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#7d89ff"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <h3 data-en="inline">Live in 48 hours</h3>
-        <h3 data-zh="inline">48 小时快速上线</h3>
-        <p data-en="inline">Pre-built connectors for every major PLM. Implementation team on-site within a week. First insights before you finish onboarding.</p>
-        <p data-zh="inline">主流 PLM/ERP 已有预制连接器。实施团队一周到场，两天完成部署。还没做完培训，第一批 AI 洞察就已经出来了。</p>
-      </div>
+  <div class="pillars-lead" data-en="inline">Why Latent · in one sentence each</div>
+  <div class="pillars-lead" data-zh="inline">三句话讲完 Latent</div>
+  <div class="pillars-row">
+    <div class="pillar-lite fade-in">
+      <h4>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 01-9 9 9 9 0 01-9-9 9 9 0 019-9c2.5 0 4.8.9 6.5 2.5"/><polyline points="22 4 12 14 9 11"/></svg>
+        <span data-en="inline">Unified across silos</span>
+        <span data-zh="inline">打通所有系统孤岛</span>
+      </h4>
+      <p data-en="inline">One question, complete context — across PLM, ERP, MES, GitHub, and Jira, read live.</p>
+      <p data-zh="inline">一个问题，完整上下文——横跨 PLM、ERP、MES、GitHub、Jira 实时读取。</p>
+    </div>
+    <div class="pillar-lite fade-in">
+      <h4>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span data-en="inline">Private by design</span>
+        <span data-zh="inline">私有部署，数据不出内网</span>
+      </h4>
+      <p data-en="inline">On-prem deployment. AI runs inside your network. Audit-ready logs, no phone-home.</p>
+      <p data-zh="inline">完全本地部署，AI 在内网运行，完整审计日志，无任何外联。</p>
+    </div>
+    <div class="pillar-lite fade-in">
+      <h4>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span data-en="inline">Live in 48 hours</span>
+        <span data-zh="inline">48 小时上线</span>
+      </h4>
+      <p data-en="inline">Pre-built connectors for every major PLM / ERP / MES. First insight before onboarding ends.</p>
+      <p data-zh="inline">主流 PLM / ERP / MES 预制连接器。培训没做完，第一批洞察已经出来。</p>
     </div>
   </div>
 </section>
@@ -1135,131 +1641,160 @@ footer {
         </ul>
       </div>
 
-      <div class="int-grid fade-in">
-        <!-- ── PLM SYSTEMS ─────────────────────────────────────────── -->
-        <div class="int-cat-label" data-en="inline">PLM Systems</div>
-        <div class="int-cat-label" data-zh="inline">PLM 系统</div>
+      <div class="int-diagram fade-in" aria-label="Latent integrates the PLM / ERP / MES cycle plus supporting tools">
+        <svg class="int-diagram-lines" viewBox="0 0 100 88" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <marker id="arrow-accent" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" class="int-flow-arrow-head"/>
+            </marker>
+          </defs>
+          <!-- Dashed lines: satellites ↔ Latent center -->
+          <line x1="50" y1="44" x2="12" y2="18"  class="int-sat-line"/>
+          <line x1="50" y1="44" x2="88" y2="18"  class="int-sat-line"/>
+          <line x1="50" y1="44" x2="50" y2="80"  class="int-sat-line"/>
+          <!-- Solid cycle arrows: PLM → ERP → MES → PLM -->
+          <path d="M 57 18 Q 82 25, 79 60" class="int-flow-arrow" marker-end="url(#arrow-accent)"/>
+          <path d="M 75 70 Q 50 82, 25 70" class="int-flow-arrow" marker-end="url(#arrow-accent)"/>
+          <path d="M 21 60 Q 18 25, 43 18" class="int-flow-arrow" marker-end="url(#arrow-accent)"/>
+          <!-- Flow stage labels -->
+          <text x="90" y="40" text-anchor="middle" class="int-flow-label">Plan</text>
+          <text x="50" y="86" text-anchor="middle" class="int-flow-label">Produce</text>
+          <text x="10" y="40" text-anchor="middle" class="int-flow-label">Design</text>
+        </svg>
 
-        <div class="int-tile">
-          <div class="int-logo">
-            <img src="https://cdn.simpleicons.org/sap/f0f0f5" alt="SAP" loading="lazy">
+        <!-- Central: Latent -->
+        <div class="int-node int-node-center">
+          <div class="int-hex">
+            <span class="int-hex-label">L</span>
           </div>
-          <div class="int-name">SAP PLM</div>
+          <div class="int-node-label">Latent</div>
         </div>
-        <div class="int-tile">
-          <div class="int-logo">
+
+        <!-- Main triangle: PLM / ERP / MES -->
+        <div class="int-node int-node-main int-node-plm">
+          <div class="int-node-bubble">
             <img src="https://cdn.simpleicons.org/siemens/009999" alt="Siemens" loading="lazy">
+            <span class="wm" style="color:#c84a4a">PTC</span>
+            <span class="wm" style="color:#e04e2d">3<span style="color:#f0f0f5">D</span>S</span>
           </div>
-          <div class="int-name">Siemens Teamcenter</div>
+          <div class="int-node-label">PLM</div>
+          <div class="int-node-sublabel" data-en="inline">Design</div>
+          <div class="int-node-sublabel" data-zh="inline">设计</div>
         </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <span class="int-logo-wordmark" style="color:#c84a4a">PTC</span>
-          </div>
-          <div class="int-name">PTC Windchill</div>
-        </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <span class="int-logo-wordmark" style="color:#e04e2d">3<span style="color:#f0f0f5">D</span>S</span>
-          </div>
-          <div class="int-name">Dassault ENOVIA</div>
-        </div>
-
-        <!-- ── ERP & MES ──────────────────────────────────────────── -->
-        <div class="int-cat-label" data-en="inline">ERP & MES</div>
-        <div class="int-cat-label" data-zh="inline">ERP & MES</div>
-
-        <div class="int-tile">
-          <div class="int-logo">
+        <div class="int-node int-node-main int-node-erp">
+          <div class="int-node-bubble">
             <img src="https://cdn.simpleicons.org/sap/f0f0f5" alt="SAP" loading="lazy">
+            <span class="wm" style="color:#f80000;font-family:Arial,sans-serif;letter-spacing:-0.8px;font-weight:900;font-size:11px">ORACLE</span>
           </div>
-          <div class="int-name">SAP ERP</div>
+          <div class="int-node-label">ERP</div>
+          <div class="int-node-sublabel" data-en="inline">Plan &amp; order</div>
+          <div class="int-node-sublabel" data-zh="inline">计划 · 采购</div>
         </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <span class="int-logo-wordmark" style="color:#f80000;font-family:Arial,sans-serif;letter-spacing:-0.8px;font-weight:900">ORACLE</span>
+        <div class="int-node int-node-main int-node-mes">
+          <div class="int-node-bubble">
+            <span class="wm" style="color:#009999;font-size:13px">Opcenter</span>
+            <span class="wm" style="color:#d9001b;font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:15px">用友</span>
           </div>
-          <div class="int-name">Oracle</div>
-        </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <span class="int-logo-wordmark" style="color:#d9001b;font-family:'PingFang SC','Microsoft YaHei',sans-serif">用友</span>
-          </div>
-          <div class="int-name" data-en="inline">Yonyou</div>
-          <div class="int-name" data-zh="inline">用友 NC</div>
-        </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <img src="https://cdn.simpleicons.org/siemens/009999" alt="Siemens" loading="lazy">
-          </div>
-          <div class="int-name">Siemens Opcenter</div>
+          <div class="int-node-label">MES</div>
+          <div class="int-node-sublabel" data-en="inline">Produce</div>
+          <div class="int-node-sublabel" data-zh="inline">生产执行</div>
         </div>
 
-        <!-- ── DEV TOOLS ──────────────────────────────────────────── -->
-        <div class="int-cat-label" data-en="inline">Developer Tools</div>
-        <div class="int-cat-label" data-zh="inline">研发协作工具</div>
-
-        <div class="int-tile">
-          <div class="int-logo">
+        <!-- Satellites: supporting tools -->
+        <div class="int-sat int-sat-github">
+          <div class="int-sat-bubble">
             <img src="https://cdn.simpleicons.org/github/f0f0f5" alt="GitHub" loading="lazy">
           </div>
-          <div class="int-name">GitHub</div>
+          <div class="int-sat-label">GitHub</div>
         </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <img src="https://cdn.simpleicons.org/gitlab/fc6d26" alt="GitLab" loading="lazy">
-          </div>
-          <div class="int-name">GitLab</div>
-        </div>
-        <div class="int-tile">
-          <div class="int-logo">
+        <div class="int-sat int-sat-jira">
+          <div class="int-sat-bubble">
             <img src="https://cdn.simpleicons.org/jira/2684ff" alt="Jira" loading="lazy">
           </div>
-          <div class="int-name">Jira</div>
+          <div class="int-sat-label">Jira</div>
         </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <img src="https://cdn.simpleicons.org/confluence/2684ff" alt="Confluence" loading="lazy">
+        <div class="int-sat int-sat-feishu">
+          <div class="int-sat-bubble">
+            <img src="https://cdn.simpleicons.org/lark/00d6b9" alt="Feishu" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;wm&quot; style=&quot;color:#00d6b9&quot;>Lark</span>'">
           </div>
-          <div class="int-name">Confluence</div>
-        </div>
-
-        <!-- ── COMMUNICATION ─────────────────────────────────────── -->
-        <div class="int-cat-label" data-en="inline">Communication</div>
-        <div class="int-cat-label" data-zh="inline">沟通协作</div>
-
-        <div class="int-tile">
-          <div class="int-logo">
-            <img src="https://cdn.simpleicons.org/wechat/07c160" alt="WeChat" loading="lazy">
-          </div>
-          <div class="int-name" data-en="inline">WeCom</div>
-          <div class="int-name" data-zh="inline">企业微信</div>
-        </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <img src="https://cdn.simpleicons.org/lark/00d6b9" alt="Feishu" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;int-logo-wordmark&quot; style=&quot;color:#00d6b9&quot;>Feishu</span>'">
-          </div>
-          <div class="int-name" data-en="inline">Feishu / Lark</div>
-          <div class="int-name" data-zh="inline">飞书</div>
-        </div>
-        <div class="int-tile">
-          <div class="int-logo">
-            <svg viewBox="0 0 64 64" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="64" height="64" rx="14" fill="#1677ff"/>
-              <path d="M18 24c0-3 2-5 5-5h18c3 0 5 2 5 5v6c0 8-6 14-14 14h-2c-1 4-4 6-8 6 2-3 3-5 3-7-4-2-7-6-7-11v-8z" fill="#fff"/>
-            </svg>
-          </div>
-          <div class="int-name" data-en="inline">DingTalk</div>
-          <div class="int-name" data-zh="inline">钉钉</div>
-        </div>
-        <div class="int-tile" style="border-style:dashed;background:transparent;opacity:.65">
-          <div class="int-logo">
-            <span class="int-logo-wordmark" style="color:var(--text3);font-size:24px">+</span>
-          </div>
-          <div class="int-name" data-en="inline">Custom connector</div>
-          <div class="int-name" data-zh="inline">自定义连接器</div>
+          <div class="int-sat-label" data-en="inline">Feishu / Lark</div>
+          <div class="int-sat-label" data-zh="inline">飞书</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON MATRIX -->
+<section id="compare">
+  <div class="sec-inner">
+    <div class="sec-label" data-en="inline">How Latent is different</div>
+    <div class="sec-label" data-zh="inline">Latent 的不同之处</div>
+    <h2 class="sec-h2" data-en="block">Not a dashboard.<br>Not a chatbot. Not a project.</h2>
+    <h2 class="sec-h2" data-zh="block">不是看板<br>不是聊天机器人<br>不是一个需要做的项目</h2>
+    <p class="sec-p" data-en="block">The most common question buyers ask: "Isn't this just ChatGPT with our data?" No. Here's what happens when you compare Latent head-to-head with the three things people try first.</p>
+    <p class="sec-p" data-zh="block">买家最常问的一句话："这不就是接了我们数据的 ChatGPT 吗？"——不是。下面是把 Latent 和通常会先尝试的三个方案逐项摆在一起的结果。</p>
+
+    <div class="cmp-wrap">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="cmp-col-latent">Latent</th>
+            <th><span data-en="inline">Traditional BI</span><span data-zh="inline">传统 BI</span><br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3);font-size:10px">Tableau · Power BI · DataV</span></th>
+            <th><span data-en="inline">General AI Copilot</span><span data-zh="inline">通用 AI 助手</span><br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3);font-size:10px">ChatGPT · Claude · Copilot</span></th>
+            <th><span data-en="inline">Self-built RAG</span><span data-zh="inline">自建 RAG</span><br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3);font-size:10px"><span data-en="inline">Internal GPT project</span><span data-zh="inline">内部 AI 项目</span></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cmp-row-label"><span data-en="inline">Reads PLM / ERP / MES live</span><span data-zh="inline">实时读取 PLM / ERP / MES</span></td>
+            <td class="cmp-col-latent"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">Pre-built connectors</span><span data-zh="inline">预置连接器</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">—</span><span data-en="inline">Manual export &amp; ETL</span><span data-zh="inline">手动导出 + ETL</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">✗</span><span data-en="inline">No data access</span><span data-zh="inline">无数据接入</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-partial">◐</span><span data-en="inline">Build it yourself</span><span data-zh="inline">自己开发</span></td>
+          </tr>
+          <tr>
+            <td class="cmp-row-label"><span data-en="inline">One question, every silo</span><span data-zh="inline">一个问题，跨系统回答</span></td>
+            <td class="cmp-col-latent"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">Joins across systems</span><span data-zh="inline">跨系统关联</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">—</span><span data-en="inline">One dashboard per system</span><span data-zh="inline">每系统一个看板</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">✗</span><span data-en="inline">No context</span><span data-zh="inline">无上下文</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-partial">◐</span><span data-en="inline">If you engineer it</span><span data-zh="inline">取决于实现</span></td>
+          </tr>
+          <tr>
+            <td class="cmp-row-label"><span data-en="inline">Time to first insight</span><span data-zh="inline">首个洞察耗时</span></td>
+            <td class="cmp-col-latent"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">48 hours</span><span data-zh="inline">48 小时</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-partial">◐</span><span data-en="inline">Weeks of BI work</span><span data-zh="inline">数周 BI 建模</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">✗</span><span data-en="inline">Never — no data</span><span data-zh="inline">无法——没有数据</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">—</span><span data-en="inline">3–6 months</span><span data-zh="inline">3–6 个月</span></td>
+          </tr>
+          <tr>
+            <td class="cmp-row-label"><span data-en="inline">Runs on-prem / airgapped</span><span data-zh="inline">支持本地 / 内网隔离部署</span></td>
+            <td class="cmp-col-latent"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">Default deployment</span><span data-zh="inline">默认部署方式</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-partial">◐</span><span data-en="inline">Some vendors</span><span data-zh="inline">部分厂商支持</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">✗</span><span data-en="inline">SaaS only</span><span data-zh="inline">仅公有云</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">If you host</span><span data-zh="inline">自托管可以</span></td>
+          </tr>
+          <tr>
+            <td class="cmp-row-label"><span data-en="inline">Audit trail + access control</span><span data-zh="inline">审计日志 + 权限管理</span></td>
+            <td class="cmp-col-latent"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">Every query logged</span><span data-zh="inline">每次查询留痕</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-partial">◐</span><span data-en="inline">Dashboard-level only</span><span data-zh="inline">仅看板级别</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">✗</span><span data-en="inline">None by default</span><span data-zh="inline">默认无</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-partial">◐</span><span data-en="inline">Build it yourself</span><span data-zh="inline">自行实现</span></td>
+          </tr>
+          <tr>
+            <td class="cmp-row-label"><span data-en="inline">Ongoing maintenance</span><span data-zh="inline">长期运维</span></td>
+            <td class="cmp-col-latent"><span class="cmp-icon cmp-yes">✓</span><span data-en="inline">Fully managed</span><span data-zh="inline">全托管</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">—</span><span data-en="inline">Dedicated BI team</span><span data-zh="inline">需专职 BI 团队</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">—</span><span data-en="inline">N/A</span><span data-zh="inline">不适用</span></td>
+            <td class="cmp-cell"><span class="cmp-icon cmp-no">✗</span><span data-en="inline">Your team, forever</span><span data-zh="inline">永远你的团队维护</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cmp-footnote">
+      <span data-en="inline">✓ strong fit · ◐ partial · — weak · ✗ not applicable</span>
+      <span data-zh="inline">✓ 强项 · ◐ 部分满足 · — 较弱 · ✗ 不适用</span>
     </div>
   </div>
 </section>
@@ -1571,6 +2106,62 @@ footer {
   </div>
 </section>
 
+<!-- ROI CALCULATOR -->
+<section id="roi">
+  <div class="sec-inner">
+    <div class="sec-label" data-en="inline">What it's worth</div>
+    <div class="sec-label" data-zh="inline">价值量化</div>
+    <h2 class="sec-h2" data-en="block">Latent pays for itself<br>in weeks, not years.</h2>
+    <h2 class="sec-h2" data-zh="block">Latent 的回报周期<br>以周计，不以年计</h2>
+    <p class="sec-p" data-en="block">Move the sliders below. Numbers update live. Based on pilot data — your real deployment will differ, but the order of magnitude holds.</p>
+    <p class="sec-p" data-zh="block">拖动下方滑块，数字实时更新。模型基于 pilot 数据——你的实际部署会有差异，但数量级不会偏。</p>
+
+    <div class="roi-card">
+      <div class="roi-inputs">
+        <div class="roi-input">
+          <div class="roi-input-head">
+            <span class="roi-label"><span data-en="inline">R&amp;D headcount</span><span data-zh="inline">研发团队规模</span></span>
+            <span class="roi-val"><span id="roi-hc-val">200</span></span>
+          </div>
+          <input type="range" min="20" max="2000" step="10" value="200" class="roi-slider" id="roi-hc">
+        </div>
+        <div class="roi-input">
+          <div class="roi-input-head">
+            <span class="roi-label"><span data-en="inline">Hours/week hunting data</span><span data-zh="inline">每周找数据耗时</span></span>
+            <span class="roi-val"><span id="roi-hr-val">4</span> <span data-en="inline">hrs</span><span data-zh="inline">小时</span></span>
+          </div>
+          <input type="range" min="1" max="10" step="0.5" value="4" class="roi-slider" id="roi-hr">
+        </div>
+        <div class="roi-input">
+          <div class="roi-input-head">
+            <span class="roi-label"><span data-en="inline">Systems in play</span><span data-zh="inline">涉及系统数</span></span>
+            <span class="roi-val"><span id="roi-sys-val">6</span></span>
+          </div>
+          <input type="range" min="2" max="15" step="1" value="6" class="roi-slider" id="roi-sys">
+        </div>
+      </div>
+      <div class="roi-outputs">
+        <div class="roi-out">
+          <div class="roi-num" id="roi-hrs">680</div>
+          <div class="roi-lbl"><span data-en="inline">hours recovered per week</span><span data-zh="inline">每周节省工时</span></div>
+        </div>
+        <div class="roi-out roi-out-main">
+          <div class="roi-num roi-num-big" id="roi-money">$3.4M</div>
+          <div class="roi-lbl"><span data-en="inline">annual value recovered</span><span data-zh="inline">年化价值</span></div>
+        </div>
+        <div class="roi-out">
+          <div class="roi-num" id="roi-payback">3</div>
+          <div class="roi-lbl"><span data-en="inline">weeks to payback</span><span data-zh="inline">周数回本</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="roi-footnote">
+      <span data-en="inline">Assumes 85% reduction in cross-system lookup time (observed at Xili Tech). Hourly cost modeled at $100 fully-loaded.</span>
+      <span data-zh="inline">模型假设跨系统查找时间减少 85%（西力科技 pilot 实测）。全负担人工时薪按 ¥500 计算。</span>
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIAL -->
 <section id="testimonial">
   <div class="test-inner">
@@ -1645,23 +2236,47 @@ footer {
         </div>
         <div class="cert-grid">
           <div class="cert">
-            <div class="cert-icon" style="color:var(--accent)">SOC</div>
-            <div class="cert-text">SOC 2 Type II<small data-en="block">Aligned</small><small data-zh="block">对齐</small></div>
+            <div class="cert-mark cert-mark-soc">SOC 2</div>
+            <div class="cert-text">SOC 2 Type II<small data-en="block">Aligned · audit scheduled</small><small data-zh="block">对齐 · 审计排期中</small></div>
           </div>
           <div class="cert">
-            <div class="cert-icon" style="color:var(--accent)">ISO</div>
-            <div class="cert-text">ISO 27001<small data-en="block">Aligned</small><small data-zh="block">对齐</small></div>
+            <div class="cert-mark cert-mark-iso">
+              <strong>ISO</strong><em>27001</em>
+            </div>
+            <div class="cert-text">ISO 27001<small data-en="block">Aligned · audit Q3 2026</small><small data-zh="block">对齐 · Q3 2026 审计</small></div>
           </div>
           <div class="cert">
-            <div class="cert-icon" style="color:var(--accent)">等保</div>
+            <div class="cert-mark cert-mark-mlps">
+              <strong>等保</strong><em>三级</em>
+            </div>
             <div class="cert-text">
               <span data-en="inline">China MLPS 2.0</span>
               <span data-zh="inline">等保 2.0</span>
-              <small data-en="block">Level 3 ready</small><small data-zh="block">三级可交付</small>
+              <small data-en="block">Level 3 ready</small><small data-zh="block">三级准备就绪</small>
             </div>
           </div>
           <div class="cert">
-            <div class="cert-icon" style="color:var(--accent)">GDPR</div>
+            <div class="cert-mark cert-mark-gdpr">
+              <svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+                <defs>
+                  <symbol id="eu-star" viewBox="-5 -5 10 10">
+                    <polygon fill="#ffcc00" points="0,-4 1.18,-1.62 3.80,-1.24 1.90,0.62 2.35,3.24 0,2 -2.35,3.24 -1.90,0.62 -3.80,-1.24 -1.18,-1.62"/>
+                  </symbol>
+                </defs>
+                <use href="#eu-star" x="21" y="7" width="6" height="6"/>
+                <use href="#eu-star" x="28" y="9" width="6" height="6"/>
+                <use href="#eu-star" x="33" y="14" width="6" height="6"/>
+                <use href="#eu-star" x="35" y="21" width="6" height="6"/>
+                <use href="#eu-star" x="33" y="28" width="6" height="6"/>
+                <use href="#eu-star" x="28" y="33" width="6" height="6"/>
+                <use href="#eu-star" x="21" y="35" width="6" height="6"/>
+                <use href="#eu-star" x="14" y="33" width="6" height="6"/>
+                <use href="#eu-star" x="9" y="28" width="6" height="6"/>
+                <use href="#eu-star" x="7" y="21" width="6" height="6"/>
+                <use href="#eu-star" x="9" y="14" width="6" height="6"/>
+                <use href="#eu-star" x="14" y="9" width="6" height="6"/>
+              </svg>
+            </div>
             <div class="cert-text">GDPR<small data-en="block">Compliant</small><small data-zh="block">合规</small></div>
           </div>
         </div>
@@ -1811,6 +2426,31 @@ footer {
         </div>
       </div>
     </div>
+
+    <div class="founder-note fade-in">
+      <div class="founder-avatar">
+        <img src="founder.jpg" alt="Ziyi Song" onerror="this.parentElement.textContent='ZS'">
+      </div>
+      <div class="founder-body">
+        <p class="founder-sig" data-en="block">
+          Hi — I'm <strong>Ziyi</strong>. Every modern company runs on five, ten, twenty systems — PLM, ERP, MES, Jira, GitHub — and <strong>nobody has a single brain that sees them all</strong>. Every decision waits for someone to reconcile spreadsheets, and every wait is an opportunity dying quietly.
+        </p>
+        <p class="founder-sig" data-en="block" style="margin-bottom:14px">
+          Latent is that brain — the one I wanted for my own team first. If you've felt this pain, write me directly. Every demo is still run by me.
+        </p>
+        <p class="founder-sig" data-zh="block">
+          我是 <strong>宋子仪</strong>。每家现代公司都跑在 5 个、10 个、20 个系统上——PLM、ERP、MES、Jira、GitHub——但<strong>没有一个大脑能看到全貌</strong>。每次决策都在等某个人手动对 Excel，每等一次，机会就溜走一次。
+        </p>
+        <p class="founder-sig" data-zh="block" style="margin-bottom:14px">
+          Latent 就是那颗大脑——最初是我给自己团队造的。如果你也有这种痛，直接写信给我。每个 demo 还是我自己演。
+        </p>
+        <div class="founder-meta">
+          <span data-en="inline"><strong>Ziyi Song</strong> · Founder, Latent · Hong Kong</span>
+          <span data-zh="inline"><strong>宋子仪</strong> · Latent 创始人 · 香港</span>
+        </div>
+      </div>
+      <a class="founder-email" href="mailto:ziyisong@asklatent.com">ziyisong@asklatent.com</a>
+    </div>
   </div>
 </section>
 
@@ -1828,7 +2468,7 @@ footer {
         <h3 data-zh="inline">还有其他问题？</h3>
         <p data-en="inline">The fastest way to get every question answered is a 30-minute demo with our solution team. We'll show Latent on your real systems, walk through the deployment model, and scope a pilot that fits your timeline.</p>
         <p data-zh="inline">最快的方式是和我们解决方案团队做一次 30 分钟演示——在你真实的系统上跑给你看，讲清楚部署方式，根据你的时间线设计 pilot 方案。</p>
-        <button class="faq-side-btn">
+        <button class="faq-side-btn" data-mailto="demo">
           <span data-en="inline">Talk to a solutions engineer →</span>
           <span data-zh="inline">联系方案工程师 →</span>
         </button>
@@ -1961,12 +2601,12 @@ footer {
       30 分钟定制化演示，展示最贴近你业务的部分。
     </p>
     <div class="cta-btns">
-      <button class="btn-hero">
+      <button class="btn-hero" data-mailto="demo">
         <span data-en="inline">Book a 30-min demo →</span>
         <span data-zh="inline">预约 30 分钟 Demo →</span>
       </button>
-      <button class="btn-hero-ghost" data-en="inline">Talk to sales</button>
-      <button class="btn-hero-ghost" data-zh="inline">联系销售</button>
+      <button class="btn-hero-ghost" data-mailto="hello" data-en="inline">Talk to sales</button>
+      <button class="btn-hero-ghost" data-mailto="hello" data-zh="inline">联系销售</button>
     </div>
     <p class="cta-note" data-en="inline">No credit card · No commitment · Private demo environment</p>
     <p class="cta-note" data-zh="inline">无需信用卡 · 无合约承诺 · 独立私有演示环境</p>
@@ -2003,7 +2643,7 @@ footer {
         <li><a href="#about" data-en="inline">About</a><a href="#about" data-zh="inline">关于我们</a></li>
         <li><a href="#" data-en="inline">Careers</a><a href="#" data-zh="inline">加入我们</a></li>
         <li><a href="#" data-en="inline">Customer stories</a><a href="#" data-zh="inline">客户故事</a></li>
-        <li><a href="#" data-en="inline">Contact</a><a href="#" data-zh="inline">联系我们</a></li>
+        <li><a href="mailto:hello@asklatent.com" data-en="inline">Contact</a><a href="mailto:hello@asklatent.com" data-zh="inline">联系我们</a></li>
       </ul>
     </div>
     <div class="foot-col">
@@ -2013,7 +2653,7 @@ footer {
         <li><a href="#" data-en="inline">Documentation</a><a href="#" data-zh="inline">产品文档</a></li>
         <li><a href="#" data-en="inline">Deployment guide</a><a href="#" data-zh="inline">部署指南</a></li>
         <li><a href="#" data-en="inline">API reference</a><a href="#" data-zh="inline">API 文档</a></li>
-        <li><a href="#" data-en="inline">Security whitepaper</a><a href="#" data-zh="inline">安全白皮书</a></li>
+        <li><a href="mailto:support@asklatent.com?subject=Security%20documentation%20request" data-en="inline">Security whitepaper</a><a href="mailto:support@asklatent.com?subject=%E5%AE%89%E5%85%A8%E6%96%87%E6%A1%A3%E7%B4%A2%E5%8F%96" data-zh="inline">安全白皮书</a></li>
       </ul>
     </div>
   </div>
@@ -2034,10 +2674,44 @@ footer {
 
 <script>
 /* ─── CONFIG ───────────────────────────────────────────────────────────────
-   Replace BOOKING_URL with your Cal.com / Calendly / 飞书妙约 booking link.
-   Any button whose text contains "demo" / "sales" / "销售" will open it. */
-const BOOKING_URL = 'https://cal.com/asklatent/demo';
-const MAILTO_SALES = 'mailto:sales@asklatent.com';
+   Email routing — live MX records on asklatent.com.
+   Set BOOKING_URL to a Cal.com / Calendly / 飞书妙约 link when ready; empty
+   string falls back to mailto:demo@ for all demo CTAs. */
+const EMAIL = {
+  demo:    'demo@asklatent.com',
+  hello:   'hello@asklatent.com',
+  support: 'support@asklatent.com',
+  founder: 'ziyisong@asklatent.com',
+};
+const BOOKING_URL = ''; // e.g. 'https://cal.com/asklatent/demo'
+
+function mailto(addr, subject, body) {
+  const q = new URLSearchParams();
+  if (subject) q.set('subject', subject);
+  if (body) q.set('body', body);
+  const qs = q.toString();
+  return `mailto:${addr}${qs ? '?' + qs : ''}`;
+}
+function openDemo() {
+  if (BOOKING_URL) {
+    window.open(BOOKING_URL, '_blank', 'noopener');
+    return;
+  }
+  const isZh = document.documentElement.lang === 'zh';
+  const subject = isZh ? 'Demo 预约 — Latent' : 'Demo request — Latent';
+  const body = isZh
+    ? '你好 Latent 团队，\n\n想看一下 demo，方便时间：\n\n公司：\n职位：\n现有系统：\n\n谢谢'
+    : "Hi Latent team,\n\nI'd like to see a demo. A good time for me is …\n\nCompany:\nRole:\nSystems in play:\n\nThanks";
+  window.location.href = mailto(EMAIL.demo, subject, body);
+}
+function openHello() {
+  const isZh = document.documentElement.lang === 'zh';
+  window.location.href = mailto(EMAIL.hello, isZh ? 'Latent 咨询' : 'Latent inquiry');
+}
+function openSupport() {
+  const isZh = document.documentElement.lang === 'zh';
+  window.location.href = mailto(EMAIL.support, isZh ? '安全文档索取' : 'Security documentation request');
+}
 
 /* ─── Language toggle ─────────────────────────────────────────────────── */
 const langButtons = document.querySelectorAll('.lang-btn');
@@ -2056,12 +2730,27 @@ try {
   else setLang('en');
 } catch(e) { setLang('en'); }
 
-/* ─── Demo-booking wire-up ────────────────────────────────────────────── */
-document.querySelectorAll('button').forEach(btn => {
+/* ─── CTA wire-up ─────────────────────────────────────────────────────
+   Each button is routed via data-mailto="demo|hello|support". Legacy
+   buttons without an attribute fall back to text-based detection so
+   nothing breaks if copy gets edited without updating the attribute. */
+document.querySelectorAll('button[data-mailto]').forEach(btn => {
+  btn.style.cursor = 'pointer';
+  const target = btn.dataset.mailto;
+  btn.addEventListener('click', () => {
+    if (target === 'demo')    openDemo();
+    else if (target === 'support') openSupport();
+    else                            openHello();
+  });
+});
+document.querySelectorAll('button:not([data-mailto])').forEach(btn => {
   const txt = btn.textContent.toLowerCase();
-  if (txt.includes('demo') || txt.includes('sales') || txt.includes('销售')) {
+  if (txt.includes('demo') || txt.includes('预约')) {
     btn.style.cursor = 'pointer';
-    btn.addEventListener('click', () => window.open(BOOKING_URL, '_blank', 'noopener'));
+    btn.addEventListener('click', openDemo);
+  } else if (txt.includes('sales') || txt.includes('销售') || txt.includes('contact')) {
+    btn.style.cursor = 'pointer';
+    btn.addEventListener('click', openHello);
   }
 });
 
@@ -2187,6 +2876,156 @@ document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
       rto = setTimeout(rebuild, 150);
     });
   }
+})();
+
+/* ─── ROI CALCULATOR ─────────────────────────────────────────
+   Live computation. Formula:
+     hoursSaved/week = headcount × weeklyHoursHunting × 0.85
+     annualValue     = hoursSaved × 48 weeks × hourlyCost
+     paybackWeeks    = latentAnnualCost / (annualValue / 48)
+
+   Latent pricing modeled at roughly headcount × $800 / year.
+   Systems slider is a secondary multiplier (each extra system
+   over the baseline of 4 adds 3% savings, capped).
+*/
+(() => {
+  const hc = document.getElementById('roi-hc');
+  const hr = document.getElementById('roi-hr');
+  const sys = document.getElementById('roi-sys');
+  if (!hc || !hr || !sys) return;
+
+  const hcVal = document.getElementById('roi-hc-val');
+  const hrVal = document.getElementById('roi-hr-val');
+  const sysVal = document.getElementById('roi-sys-val');
+  const hrsOut = document.getElementById('roi-hrs');
+  const moneyOut = document.getElementById('roi-money');
+  const paybackOut = document.getElementById('roi-payback');
+
+  function fmtMoney(n, isZh) {
+    if (isZh) {
+      if (n >= 1e8) return '¥' + (n / 1e8).toFixed(1) + ' 亿';
+      if (n >= 1e4) return '¥' + Math.round(n / 1e4) + ' 万';
+      return '¥' + Math.round(n);
+    }
+    if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return '$' + Math.round(n / 1e3) + 'K';
+    return '$' + Math.round(n);
+  }
+
+  function fmtNum(n) {
+    if (n >= 1e4) return Math.round(n / 1e3) + 'K';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return Math.round(n).toString();
+  }
+
+  function compute() {
+    const headcount = +hc.value;
+    const hours = +hr.value;
+    const systems = +sys.value;
+
+    const systemBoost = 1 + Math.min(Math.max(systems - 4, 0), 8) * 0.03;
+    const reduction = Math.min(0.85 * systemBoost, 0.92);
+
+    const hoursSavedWeek = headcount * hours * reduction;
+    const isZh = document.documentElement.lang === 'zh';
+    const hourlyCost = isZh ? 500 : 100;
+    const annualValue = hoursSavedWeek * 48 * hourlyCost;
+    const latentAnnual = isZh ? headcount * 5600 : headcount * 800;
+    const paybackWeeks = Math.max(1, Math.round(latentAnnual / Math.max(annualValue / 48, 1)));
+
+    hcVal.textContent = headcount.toLocaleString();
+    hrVal.textContent = hours;
+    sysVal.textContent = systems;
+    hrsOut.textContent = fmtNum(hoursSavedWeek);
+    moneyOut.textContent = fmtMoney(annualValue, isZh);
+    paybackOut.textContent = paybackWeeks;
+  }
+
+  [hc, hr, sys].forEach(el => el.addEventListener('input', compute));
+
+  /* Re-compute on language toggle */
+  const langObs = new MutationObserver(compute);
+  langObs.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+  compute();
+})();
+
+/* ─── HERO CLICKABLE PRESETS ─────────────────────────────────────
+   After the opening auto-play finishes (~7.5s), reveal 3 question
+   chips. Clicking one clears the chat and plays a fresh Q/typing/A
+   sequence in the same container. Each AI answer ends with a soft
+   "Book a demo" link that scrolls to the CTA.
+*/
+(() => {
+  const chat = document.querySelector('.app-msgs');
+  const chips = document.getElementById('hero-chips');
+  if (!chat || !chips) return;
+
+  const bookEn = 'Book a demo →';
+  const bookZh = '预约 demo →';
+  const bookLink = `<br><a class="book-demo" href="#cta"><span data-en="inline">${bookEn}</span><span data-zh="inline">${bookZh}</span></a>`;
+
+  const presets = {
+    capacity: {
+      q_en: "Who's overloaded on my team right now?",
+      q_zh: '团队里谁目前负荷超标？',
+      a_en: `<strong>3 engineers over 100% load</strong>:<br><br>• <strong>Michael Reed</strong> (Mech) <span class="risk-tag risk-high">115%</span> — 5 overdue<br>• <strong>Sarah Klein</strong> (Elec) <span class="risk-tag risk-med">98%</span> — approaching cap<br>• <strong>Kai Nakamura</strong> (SW) <span class="risk-tag risk-high">104%</span> — blocked on review<br><br>Rebalance 4 tasks → all under 90%.${bookLink}`,
+      a_zh: `<strong>3 位工程师负荷超标</strong>：<br><br>• <strong>张明</strong>（机械）<span class="risk-tag risk-high">115%</span> — 5 项逾期<br>• <strong>李华</strong>（电控）<span class="risk-tag risk-med">98%</span> — 接近过载<br>• <strong>王磊</strong>（软件）<span class="risk-tag risk-high">104%</span> — 卡在审核<br><br>调 4 个任务 → 均降至 90% 以下。${bookLink}`
+    },
+    supplier: {
+      q_en: 'Any suppliers about to cause a problem?',
+      q_zh: '有供应商即将出问题吗？',
+      a_en: `<strong>2 suppliers flagged</strong> — joined ERP POs + MES incoming:<br><br>• <strong>SupplierCo-A</strong> (gearbox) <span class="risk-tag risk-high">HIGH</span> · 12-day slip pattern, Helios-07 at risk<br>• <strong>SupplierCo-B</strong> (sensor) <span class="risk-tag risk-med">MED</span> · reject rate +3.2% this month<br><br>Call A today. Escalate B to procurement.${bookLink}`,
+      a_zh: `<strong>识别到 2 家供应商风险</strong> — 已关联 ERP 订单 + MES 来料：<br><br>• <strong>供应商甲</strong>（减速箱）<span class="risk-tag risk-high">HIGH</span> · 交付延迟扩大 12 天，Helios-07 受影响<br>• <strong>供应商乙</strong>（传感器）<span class="risk-tag risk-med">MED</span> · 本月不良率 +3.2%<br><br>今日联系甲方。乙方升级至采购部。${bookLink}`
+    },
+    quality: {
+      q_en: "What's driving quality failures this month?",
+      q_zh: '本月质量问题的根因是什么？',
+      a_en: `<strong>4 NCRs trace to a single root cause</strong>:<br><br>• <strong>Helios-07</strong> braking assembly — lot <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent)">#A71</span> from SupplierCo-B<br>• ECN filed 9 days ago, <span class="risk-tag risk-med">pending approval</span><br><br>Clearing the ECN resolves 3 of 4 NCRs.${bookLink}`,
+      a_zh: `<strong>本月 4 个不合格报告归结为一处根因</strong>：<br><br>• <strong>Helios-07</strong> 制动总成 — 批次 <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent)">#A71</span>（供应商乙）<br>• ECN 已提 9 天，<span class="risk-tag risk-med">待审批</span><br><br>清掉 ECN → 解决 4 个 NCR 中的 3 个。${bookLink}`
+    }
+  };
+
+  let playing = false;
+
+  function playPreset(key) {
+    const p = presets[key];
+    if (!p || playing) return;
+    playing = true;
+
+    chat.style.transition = 'opacity 0.22s ease';
+    chat.style.opacity = '0';
+
+    setTimeout(() => {
+      chat.innerHTML = `
+        <div class="msg-row user-row" style="--delay:0.15s">
+          <div class="bubble bubble-user">
+            <span data-en="inline">${p.q_en}</span>
+            <span data-zh="inline">${p.q_zh}</span>
+          </div>
+        </div>
+        <div class="typing-row" style="--delay:0.7s">
+          <div class="typing-bubble">
+            <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+          </div>
+        </div>
+        <div class="msg-row ai-row" style="--delay:2.0s">
+          <div class="bubble bubble-ai" data-en="block">${p.a_en}</div>
+          <div class="bubble bubble-ai" data-zh="block">${p.a_zh}</div>
+        </div>
+      `;
+      chat.style.opacity = '1';
+      setTimeout(() => { playing = false; }, 2500);
+    }, 220);
+  }
+
+  chips.querySelectorAll('.hero-chip').forEach(chip => {
+    chip.addEventListener('click', () => playPreset(chip.dataset.preset));
+  });
+
+  /* Reveal chips once the opening auto-play sequence has finished. */
+  setTimeout(() => { chips.classList.add('vis'); }, 7400);
 })();
 </script>
 </body>
